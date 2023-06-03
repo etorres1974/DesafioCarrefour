@@ -75,6 +75,6 @@ class ServiceTest {
 
     private fun <T> Response<T>.assertIs200(){
         assert(this.isSuccessful)
-        {"Was expecting 200 but got : ${this.code()} - ${this.errorBody()}"}
+            {"Was expecting 200 but got : ${this.code()} - ${this.errorBody()}"}
     }
 }

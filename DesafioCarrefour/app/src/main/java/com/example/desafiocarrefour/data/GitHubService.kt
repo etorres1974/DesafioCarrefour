@@ -2,8 +2,8 @@ package com.example.desafiocarrefour.data
 
 import com.example.desafiocarrefour.data.model.GithubApiRepositoryListItem
 import com.example.desafiocarrefour.data.model.GithubApiUserDetails
+import com.example.desafiocarrefour.data.model.GithubApiUserSearchItem
 import com.example.desafiocarrefour.data.model.GithubApiUserSearchResponse
-import com.example.desafiocarrefour.domain.model.User
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,6 +22,6 @@ interface GitHubService {
     suspend fun getUserListByQuery(@Query("q") query : String) : Response<GithubApiUserSearchResponse>
 
     @GET("users")
-    suspend fun getUserList(@Query("since") since : Int) :  Response<List<User>>
+    suspend fun getUserList(@Query("since") since : Int) :  Response<List<GithubApiUserSearchItem?>>
 
 }

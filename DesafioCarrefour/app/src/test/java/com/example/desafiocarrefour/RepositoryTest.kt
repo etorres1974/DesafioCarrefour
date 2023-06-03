@@ -29,6 +29,32 @@ class RepositoryTest {
         val exception = response.exceptionOrNull()
         assert(exception is GitHubApiException.QueryMissing)
             {"Was expecting exception to be query missing, but got : $exception"}
+    }
 
+    @Test
+    fun `get user list`() = runBlocking {
+        val response = repository.getUserList(0)
+        assert(response.isSuccess)
+        val users = response.getOrNull() ?: emptyList()
+        assert(users.isNotEmpty())
+            {"Was expecting user list, but got empty"}
+    }
+
+    @Test
+    fun `get user details `() = runBlocking {
+        val response = repository.getUserDetails("torvalds")
+        assert(response.isSuccess)
+        val userDetail = response.getOrNull()
+        assert(userDetail != null)
+            {"Was expecting user details, but got null"}
+    }
+
+    @Test
+    fun `get user details throws Not Found error for invalid user`() = runBlocking {
+        val response = repository.getUserDetails(" ")
+        assert(response.isFailure)
+        val exception = response.exceptionOrNull()
+        assert(exception is GitHubApiException.NotFound)
+            {"Was expecting NotFound exception, but got ${exception}"}
     }
 }

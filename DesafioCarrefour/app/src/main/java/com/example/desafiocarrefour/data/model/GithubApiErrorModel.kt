@@ -11,4 +11,9 @@ data class GithubApiErrorModel(
         val expectedError = error?.code == "missing" && error .field == "q" && error.resource == "Search"
         return expectedMessage && expectedError
     }
-}
+
+    fun isNotFound() : Boolean {
+        val expectedMessage = this.message == "Not Found"
+        return expectedMessage
+    }
+ }
