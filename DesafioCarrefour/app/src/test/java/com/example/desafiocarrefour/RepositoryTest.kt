@@ -57,4 +57,22 @@ class RepositoryTest {
         assert(exception is GitHubApiException.NotFound)
             {"Was expecting NotFound exception, but got ${exception}"}
     }
+
+    @Test
+    fun `get user repositories`() = runBlocking {
+        val response = repository.getUserRepositories("torvalds")
+        assert(response.isSuccess)
+        val repositoryList = response.getOrNull()
+        assert(repositoryList?.isNotEmpty() == true)
+            {"Was NOT expecting empty repository list, but got $repositoryList"}
+    }
+
+    @Test
+    fun `get user repositories throws Not Found error for invalid user`() = runBlocking {
+        val response = repository.getUserRepositories(" ")
+        assert(response.isFailure)
+        val exception = response.exceptionOrNull()
+        assert(exception is GitHubApiException.NotFound)
+            {"Was expecting NotFound exception, but got ${exception}"}
+    }
 }
