@@ -1,6 +1,6 @@
 package com.example.desafiocarrefour.data.model
 
-data class User(
+data class GithubApiUserSearchItem(
     val avatar_url: String?,
     val events_url: String?,
     val followers_url: String?,

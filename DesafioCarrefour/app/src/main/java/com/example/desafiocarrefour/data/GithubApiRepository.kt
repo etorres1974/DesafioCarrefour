@@ -1,6 +1,6 @@
 package com.example.desafiocarrefour.data
 
-import com.example.desafiocarrefour.data.model.User
+import com.example.desafiocarrefour.data.model.GithubApiUserSearchItem
 
 class GithubApiRepository {
 
@@ -8,7 +8,7 @@ class GithubApiRepository {
     private val service = retrofit.create(GitHubService::class.java)
     private val errorParser = GitHubApiErrorParser()
 
-    suspend fun getUserListByQuery(query : String) : Result<List<User>> {
+    suspend fun getUserListByQuery(query : String) : Result<List<GithubApiUserSearchItem>> {
         return try {
             val response = service.getUserListByQuery(query)
             if(response.isSuccessful) {
