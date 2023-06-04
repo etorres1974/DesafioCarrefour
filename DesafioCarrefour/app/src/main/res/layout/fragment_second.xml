@@ -4,24 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.SecondFragment">
+    android:layout_margin="4dp"
+    tools:context=".presentation.userDetails.UserDetailsFragment">
 
-    <TextView
-        android:id="@+id/textview_second"
+    <ImageView
+        android:id="@+id/image_view_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="144dp"
+        tools:layout_width="144dp"
+        tools:src="@drawable/ic_baseline_error_outline_24_material_red" />
 
-    <Button
-        android:id="@+id/button_second"
+    <LinearLayout
+        app:layout_constraintStart_toEndOf="@id/image_view_user"
+        app:layout_constraintTop_toTopOf="@id/image_view_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/text_view_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/text_view_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="login" />
+
+        <TextView
+            android:drawableLeft="@drawable/baseline_work_outline_24"
+            android:id="@+id/text_view_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Company" />
+
+        <TextView
+            android:drawableLeft="@drawable/baseline_location_on_24"
+            android:id="@+id/text_view_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Location" />
+
+        <TextView
+            android:drawableLeft="@drawable/baseline_people_24"
+            android:id="@+id/text_view_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="43" />
+
+    </LinearLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

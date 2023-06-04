@@ -18,6 +18,13 @@ class UserDataToDomainUseCase {
     fun userDetail(data : GithubApiUserDetails) : UserDetails{
         return UserDetails(
             id = data.id ?: -1,
+            name = data.name ?: "",
+            login = data.login ?: "",
+            location = data.location ?: "",
+            company = data.company ?: "",
+            avatarUrl = data.avatar_url ?: "",
+            followers = data.followers ?: 0,
+            publicRepos = data.public_repos ?: 0,
         )
     }
 }

@@ -11,9 +11,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.desafiocarrefour.R
 import com.example.desafiocarrefour.databinding.ActivityMainBinding
+import com.example.desafiocarrefour.presentation.userList.UserListViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private val userListViewModel : UserListViewModel by viewModel()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -22,17 +25,12 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        userListViewModel.getUsers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.desafiocarrefour.R
 import com.example.desafiocarrefour.databinding.FragmentFirstBinding
+import com.example.desafiocarrefour.domain.model.UserListItem
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListFragment : Fragment() {
 
-    private val userListViewModel = UserListViewModel()
-    private val adapter = UserListAdapter()
+    private val userListViewModel : UserListViewModel by activityViewModel()
+    private val adapter = UserListAdapter(::openUserDetails)
 
     private lateinit var binding: FragmentFirstBinding
 
@@ -29,7 +32,8 @@ class UserListFragment : Fragment() {
         setupRecyclerView()
     }
 
-    private fun navigateToSecondFragment(){
+    private fun openUserDetails(user: UserListItem){
+        userListViewModel.getUserDetails(user.login)
         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
     }
 

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.desafiocarrefour.domain.model.UserListItem
 
-class UserListAdapter() :ListAdapter<UserListItem, UserListItemViewHolder>(USER_COMPARATOR) {
+class UserListAdapter(private val openDetails: (UserListItem) -> Unit) :ListAdapter<UserListItem, UserListItemViewHolder>(USER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         UserListItemViewHolder.inflate(parent)
@@ -13,7 +13,7 @@ class UserListAdapter() :ListAdapter<UserListItem, UserListItemViewHolder>(USER_
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
         val user = getItem(position)
-        holder.bind(user)
+        holder.bind(user, openDetails)
     }
 
     companion object {
