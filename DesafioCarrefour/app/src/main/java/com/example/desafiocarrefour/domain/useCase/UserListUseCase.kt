@@ -8,13 +8,13 @@ class UserListUseCase {
     private val repository = GithubApiRepository()
     private val userTransformer = UserDataToDomainUseCase()
 
-    suspend fun getUsersByQuery(query: String): List<UserListItem>? {
+    suspend fun getUsersByQuery(query: String): List<UserListItem> {
         val response = repository.getUserListByQuery(query)
         val dataUserList = response.getOrThrow()
         return dataUserList.map { userTransformer.userListItem(it) }
     }
 
-    suspend fun getUsersList(since : Int) : List<UserListItem>? {
+    suspend fun getUsersList(since : Int) : List<UserListItem> {
         val response = repository.getUserList(since)
         val dataUserList = response.getOrThrow()
         return dataUserList.map { userTransformer.userListItem(it) }
