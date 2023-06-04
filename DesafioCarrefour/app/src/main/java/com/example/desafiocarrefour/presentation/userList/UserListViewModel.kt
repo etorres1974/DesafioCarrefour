@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.desafiocarrefour.domain.model.RepositoryListItem
 import com.example.desafiocarrefour.domain.model.UserDetails
 import com.example.desafiocarrefour.domain.model.UserListItem
+import com.example.desafiocarrefour.domain.useCase.RepositoryListUseCase
 import com.example.desafiocarrefour.domain.useCase.UserDetailUseCase
 import com.example.desafiocarrefour.domain.useCase.UserListUseCase
 import kotlinx.coroutines.launch
@@ -14,6 +16,7 @@ class UserListViewModel : ViewModel() {
 
     private val userListUseCase = UserListUseCase()
     private val userDetailsUseCase = UserDetailUseCase()
+    private val repositoryListUseCase = RepositoryListUseCase()
 
 
     private val _usersLiveData = MutableLiveData<List<UserListItem>>()
@@ -31,6 +34,12 @@ class UserListViewModel : ViewModel() {
     private val _usersDetailsLoading = MutableLiveData<Boolean>()
     val usersDetailsLoading : LiveData<Boolean> = _usersDetailsLoading
 
+    private val _repositoryListLivedata = MutableLiveData<List<RepositoryListItem>>()
+    val repositoryListLivedata : LiveData<List<RepositoryListItem>> = _repositoryListLivedata
+
+    private val _repositoryListLoading = MutableLiveData<Boolean>()
+    val repositoryListLoading : LiveData<Boolean> = _repositoryListLoading
+
 
 
     fun getUsers(){
@@ -43,6 +52,7 @@ class UserListViewModel : ViewModel() {
     }
 
     fun getUserDetails(login : String){
+        getRepositoryListByLogin(login)
         viewModelScope.launch {
             _usersDetailsLoading.postValue(true)
             val userDetails = userDetailsUseCase.getUserDetails(login)
@@ -55,6 +65,15 @@ class UserListViewModel : ViewModel() {
         viewModelScope.launch {
             val users = userListUseCase.getUsersByQuery(query)
             _queryUsersLiveData.postValue(users)
+        }
+    }
+
+    private fun getRepositoryListByLogin(login : String){
+        viewModelScope.launch {
+            _repositoryListLoading.postValue(true)
+            val repositoryList = repositoryListUseCase.getUserRepository(login)
+            _repositoryListLivedata.postValue(repositoryList)
+            _repositoryListLoading.postValue(false)
         }
     }
 }

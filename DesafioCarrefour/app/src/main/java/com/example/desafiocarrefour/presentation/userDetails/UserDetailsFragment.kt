@@ -1,23 +1,22 @@
 package com.example.desafiocarrefour.presentation.userDetails
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.example.desafiocarrefour.R
+import androidx.fragment.app.Fragment
 import com.example.desafiocarrefour.databinding.FragmentSecondBinding
 import com.example.desafiocarrefour.domain.model.UserDetails
 import com.example.desafiocarrefour.presentation.addTextOrHide
 import com.example.desafiocarrefour.presentation.loadImageUrl
 import com.example.desafiocarrefour.presentation.userList.UserListViewModel
-import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class UserDetailsFragment : Fragment() {
 
     private val userListViewModel : UserListViewModel by activityViewModel()
+    private val repoAdapter = RepositoryListAdapter()
+
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
 
@@ -34,6 +33,10 @@ class UserDetailsFragment : Fragment() {
         userListViewModel.usersDetailsLiveData.observe(viewLifecycleOwner){ user ->
             setupUserDetailsCardView(user)
         }
+        binding.recyclerViewRepos.adapter = repoAdapter
+        userListViewModel.repositoryListLivedata.observe(viewLifecycleOwner){
+            repoAdapter.submitList(it)
+        }
     }
 
     private fun setupUserDetailsCardView(user : UserDetails){
@@ -45,6 +48,7 @@ class UserDetailsFragment : Fragment() {
                 textViewCompany.addTextOrHide(company)
                 textViewLocation.addTextOrHide(location)
                 textViewFollowers.addTextOrHide(followers.toString())
+                textViewRepoCounter.addTextOrHide(publicRepos.toString())
             }
         }
     }
