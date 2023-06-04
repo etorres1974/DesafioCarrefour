@@ -33,9 +33,29 @@ class UserDetailsFragment : Fragment() {
         userListViewModel.usersDetailsLiveData.observe(viewLifecycleOwner){ user ->
             setupUserDetailsCardView(user)
         }
+        setupRecyclerView()
+        setupLoading()
+    }
+
+    private fun setupRecyclerView(){
         binding.recyclerViewRepos.adapter = repoAdapter
         userListViewModel.repositoryListLivedata.observe(viewLifecycleOwner){
             repoAdapter.submitList(it)
+        }
+    }
+
+    private fun setupLoading(){
+        userListViewModel.usersDetailsLoading.observe(viewLifecycleOwner){
+            if(it)
+                binding.shimmerUser.startShimmer()
+            else
+                binding.shimmerUser.hideShimmer()
+        }
+        userListViewModel.repositoryListLoading.observe(viewLifecycleOwner){
+            if(it)
+                binding.shimmerRepository.startShimmer()
+            else
+                binding.shimmerRepository.hideShimmer()
         }
     }
 

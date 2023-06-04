@@ -46,6 +46,7 @@ class UserListFragment : Fragment() {
         }
     }
 
+
     private fun setupSearchBar(){
         binding.searchView.rootView.setOnClickListener {
             binding.searchView.onActionViewExpanded()

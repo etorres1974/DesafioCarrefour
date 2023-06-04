@@ -70,6 +70,7 @@ class UserListViewModel : ViewModel() {
 
     private fun getRepositoryListByLogin(login : String){
         viewModelScope.launch {
+            _repositoryListLivedata.postValue(emptyList())
             _repositoryListLoading.postValue(true)
             val repositoryList = repositoryListUseCase.getUserRepository(login)
             _repositoryListLivedata.postValue(repositoryList)
