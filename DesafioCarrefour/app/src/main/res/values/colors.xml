@@ -7,4 +7,25 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="Python">#3776AB</color>
+    <color name="Java">#007396</color>
+    <color name="JavaScript">#F7DF1E</color>
+    <color name="CPlusPlus">#00599C</color>
+    <color name="C">#A8B9CC</color>
+    <color name="CSharp">#178600</color>
+    <color name="Ruby">#CC342D</color>
+    <color name="Swift">#FFAC45</color>
+    <color name="Go">#00ADD8</color>
+    <color name="Rust">#DEA584</color>
+    <color name="PHP">#777BB3</color>
+    <color name="TypeScript">#007ACC</color>
+    <color name="HTML">#E34C26</color>
+    <color name="CSS">#264DE4</color>
+    <color name="Kotlin">#F18E33</color>
+    <color name="Scala">#DC322F</color>
+    <color name="Perl">#39457E</color>
+    <color name="Haskell">#5E5086</color>
+    <color name="Lua">#000080</color>
+    <color name="R">#1A7692</color>
 </resources>
