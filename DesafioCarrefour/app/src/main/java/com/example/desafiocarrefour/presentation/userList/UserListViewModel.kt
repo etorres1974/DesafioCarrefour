@@ -19,6 +19,9 @@ class UserListViewModel : ViewModel() {
     private val _usersLiveData = MutableLiveData<List<UserListItem>>()
     val usersLiveData : LiveData<List<UserListItem>> = _usersLiveData
 
+    private val _queryUsersLiveData = MutableLiveData<List<UserListItem>>()
+    val queryUsersLiveData : LiveData<List<UserListItem>> = _queryUsersLiveData
+
     private val _usersLivedataLoading = MutableLiveData<Boolean>()
     val usersLivedataLoading : LiveData<Boolean> = _usersLivedataLoading
 
@@ -27,6 +30,8 @@ class UserListViewModel : ViewModel() {
 
     private val _usersDetailsLoading = MutableLiveData<Boolean>()
     val usersDetailsLoading : LiveData<Boolean> = _usersDetailsLoading
+
+
 
     fun getUsers(){
         viewModelScope.launch {
@@ -43,6 +48,13 @@ class UserListViewModel : ViewModel() {
             val userDetails = userDetailsUseCase.getUserDetails(login)
             _userDetailsLiveData.postValue(userDetails)
             _usersDetailsLoading.postValue(false)
+        }
+    }
+
+    fun searchUsersByQuery(query : String){
+        viewModelScope.launch {
+            val users = userListUseCase.getUsersByQuery(query)
+            _queryUsersLiveData.postValue(users)
         }
     }
 }

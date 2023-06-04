@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.example.desafiocarrefour.R
 import com.example.desafiocarrefour.databinding.FragmentFirstBinding
@@ -16,6 +17,7 @@ class UserListFragment : Fragment() {
 
     private val userListViewModel : UserListViewModel by activityViewModel()
     private val adapter = UserListAdapter(::openUserDetails)
+    private val queryAdapter = UserListAdapter(::openUserDetails)
 
     private lateinit var binding: FragmentFirstBinding
 
@@ -30,6 +32,7 @@ class UserListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupSearchBar()
     }
 
     private fun openUserDetails(user: UserListItem){
@@ -45,8 +48,35 @@ class UserListFragment : Fragment() {
     }
 
     private fun setupSearchBar(){
-        binding.searchView.setOnSearchClickListener {
-            //TODO - Search users
+        //binding.searchView.setIconifiedByDefault(true)
+        //binding.searchView.isFocusable = true
+        //binding.searchView.isIconified = false
+        //binding.searchView.requestFocusFromTouch()
+
+        binding.searchView.setOnQueryTextListener(object  : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) {
+                    userListViewModel.searchUsersByQuery(query)
+                    binding.searchView.clearFocus()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean = false
+        })
+
+        binding.queryUserRecyclerView.adapter = queryAdapter
+        userListViewModel.queryUsersLiveData.observe(viewLifecycleOwner){
+            binding.userRecyclerView.visibility = View.GONE
+            binding.queryUserRecyclerView.visibility = View.VISIBLE
+            queryAdapter.submitList(it)
+        }
+
+        binding.searchView.setOnCloseListener {
+            binding.userRecyclerView.visibility = View.VISIBLE
+            binding.queryUserRecyclerView.visibility = View.GONE
+            true
         }
     }
 }
