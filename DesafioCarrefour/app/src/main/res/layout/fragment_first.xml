@@ -7,6 +7,8 @@
     tools:context=".presentation.userList.UserListFragment">
 
     <androidx.appcompat.widget.SearchView
+        app:queryHint="@string/user_search_hint"
+        app:iconifiedByDefault="false"
         android:id="@+id/searchView"
         android:padding="4dp"
         app:layout_constraintStart_toStartOf="parent"
