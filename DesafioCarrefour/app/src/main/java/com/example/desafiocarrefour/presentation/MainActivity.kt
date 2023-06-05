@@ -1,15 +1,16 @@
 package com.example.desafiocarrefour.presentation
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.example.desafiocarrefour.R
+import com.example.desafiocarrefour.data.GitHubApiException
 import com.example.desafiocarrefour.databinding.ActivityMainBinding
 import com.example.desafiocarrefour.presentation.userList.UserListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,6 +32,19 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         userListViewModel.getUsers()
+        userListViewModel.error.observe(this){
+            val text = throwableToUserMessage(it)
+            val duration = Toast.LENGTH_LONG
+            val toast = Toast.makeText(this, text, duration)
+            toast.show()
+        }
+    }
+
+    private fun throwableToUserMessage( throwable: Throwable) : String = when(throwable){
+        is GitHubApiException.NotFound -> getString(R.string.exception_not_found)
+        is GitHubApiException.QueryMissing -> getString(R.string.exception_query_missing)
+        is GitHubApiException.LimitRate-> getString(R.string.exception_limit_rate)
+        else -> getString(R.string.exception_unknown)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

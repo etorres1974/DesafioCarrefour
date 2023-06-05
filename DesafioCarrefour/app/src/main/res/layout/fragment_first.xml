@@ -14,6 +14,15 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"/>
 
+    <TextView
+        android:id="@+id/text_view_empty"
+        android:text="@string/empty_user_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pull_to_refresh"
         app:layout_constraintTop_toBottomOf="@id/searchView"
@@ -33,6 +42,4 @@
             tools:listitem="@layout/item_user_list"
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

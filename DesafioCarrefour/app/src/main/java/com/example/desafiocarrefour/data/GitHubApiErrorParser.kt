@@ -26,7 +26,8 @@ class GitHubApiErrorParser {
             when{
                 response.code() == 422 && error.isSearchQueryMissing() -> GitHubApiException.QueryMissing()
                 response.code() == 404 && error.isNotFound() -> GitHubApiException.NotFound()
-                else ->GitHubApiException.Unknown()
+                response.code() == 403 && error.isLimitRate() -> GitHubApiException.LimitRate()
+                else -> GitHubApiException.Unknown()
             }
         }catch (e :Exception){
             GitHubApiException.Unknown()
@@ -36,6 +37,7 @@ class GitHubApiErrorParser {
 }
 
 sealed class GitHubApiException : Throwable() {
+    class LimitRate : GitHubApiException()
     class QueryMissing : GitHubApiException()
     class NotFound :  GitHubApiException()
     class Unknown : GitHubApiException()

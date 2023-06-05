@@ -20,61 +20,69 @@ class UserListViewModel : ViewModel() {
 
 
     private val _usersLiveData = MutableLiveData<List<UserListItem>>()
-    val usersLiveData : LiveData<List<UserListItem>> = _usersLiveData
+    val usersLiveData: LiveData<List<UserListItem>> = _usersLiveData
 
     private val _queryUsersLiveData = MutableLiveData<List<UserListItem>>()
-    val queryUsersLiveData : LiveData<List<UserListItem>> = _queryUsersLiveData
+    val queryUsersLiveData: LiveData<List<UserListItem>> = _queryUsersLiveData
 
     private val _usersLivedataLoading = MutableLiveData<Boolean>()
-    val usersLivedataLoading : LiveData<Boolean> = _usersLivedataLoading
+    val usersLivedataLoading: LiveData<Boolean> = _usersLivedataLoading
 
     private val _userDetailsLiveData = MutableLiveData<UserDetails>()
-    val usersDetailsLiveData : LiveData<UserDetails> = _userDetailsLiveData
+    val usersDetailsLiveData: LiveData<UserDetails> = _userDetailsLiveData
 
     private val _usersDetailsLoading = MutableLiveData<Boolean>()
-    val usersDetailsLoading : LiveData<Boolean> = _usersDetailsLoading
+    val usersDetailsLoading: LiveData<Boolean> = _usersDetailsLoading
 
     private val _repositoryListLivedata = MutableLiveData<List<RepositoryListItem>>()
-    val repositoryListLivedata : LiveData<List<RepositoryListItem>> = _repositoryListLivedata
+    val repositoryListLivedata: LiveData<List<RepositoryListItem>> = _repositoryListLivedata
 
     private val _repositoryListLoading = MutableLiveData<Boolean>()
-    val repositoryListLoading : LiveData<Boolean> = _repositoryListLoading
+    val repositoryListLoading: LiveData<Boolean> = _repositoryListLoading
 
+    private val _error = MutableLiveData<Throwable>()
+    val error: LiveData<Throwable> = _error
 
-
-    fun getUsers(){
+    private fun launchSafeRequest(loadingLivedata : MutableLiveData<Boolean>? = null, request: suspend () -> Unit, ) {
         viewModelScope.launch {
-            _usersLivedataLoading.postValue(true)
+            try {
+                loadingLivedata?.postValue(true)
+                request()
+            } catch (t: Throwable) {
+                _error.postValue(t)
+            } finally {
+                loadingLivedata?.postValue(false)
+            }
+        }
+    }
+
+    fun getUsers() {
+        launchSafeRequest(_usersLivedataLoading) {
             val users = userListUseCase.getUsersList(0)
             _usersLiveData.postValue(users)
-            _usersLivedataLoading.postValue(false)
         }
     }
 
-    fun getUserDetails(login : String){
+    fun getUserDetails(login: String) {
         getRepositoryListByLogin(login)
-        viewModelScope.launch {
-            _usersDetailsLoading.postValue(true)
+        launchSafeRequest(_usersDetailsLoading){
             val userDetails = userDetailsUseCase.getUserDetails(login)
             _userDetailsLiveData.postValue(userDetails)
-            _usersDetailsLoading.postValue(false)
         }
     }
 
-    fun searchUsersByQuery(query : String){
-        viewModelScope.launch {
+    fun searchUsersByQuery(query: String) {
+        launchSafeRequest(_usersLivedataLoading) {
             val users = userListUseCase.getUsersByQuery(query)
             _queryUsersLiveData.postValue(users)
         }
     }
 
-    private fun getRepositoryListByLogin(login : String){
-        viewModelScope.launch {
+    private fun getRepositoryListByLogin(login: String) {
+        launchSafeRequest(_repositoryListLoading) {
             _repositoryListLivedata.postValue(emptyList())
-            _repositoryListLoading.postValue(true)
             val repositoryList = repositoryListUseCase.getUserRepository(login)
             _repositoryListLivedata.postValue(repositoryList)
-            _repositoryListLoading.postValue(false)
         }
     }
 }

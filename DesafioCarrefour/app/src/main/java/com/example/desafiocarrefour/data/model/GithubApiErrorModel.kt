@@ -16,4 +16,9 @@ data class GithubApiErrorModel(
         val expectedMessage = this.message == "Not Found"
         return expectedMessage
     }
+
+    fun isLimitRate() : Boolean {
+        val expected = this.message?.startsWith("API rate limit exceeded") ?: false
+        return expected
+    }
  }

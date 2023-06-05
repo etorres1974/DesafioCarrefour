@@ -19,7 +19,7 @@ class HttpClient {
         OkHttpClient.Builder()
             .addInterceptor(AuthenticationInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.HEADERS
+                level = HttpLoggingInterceptor.Level.BODY
             })
             .build()
 

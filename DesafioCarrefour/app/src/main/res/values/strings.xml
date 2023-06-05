@@ -5,4 +5,12 @@
     <string name="first_fragment_label">User List</string>
     <string name="second_fragment_label">User Details</string>
     <string name="repos">Repositórios</string>
+    <string name="empty_user_list">Nenhum resultado encontrado.
+        Tente uma nova busca ou deslize para baixo para atualizar.</string>
+
+    <string name="exception_not_found">Resultado de busca não encontrado</string>
+    <string name="exception_query_missing">Parametro de busca não pode estar vazio.</string>
+    <string name="exception_limit_rate">Limite de requisicões atingindo, tente novamente mais tarde.</string>
+    <string name="exception_unknown">Aconteceu um erro inesperado, tente novamente mais tarde.</string>
+
 </resources>

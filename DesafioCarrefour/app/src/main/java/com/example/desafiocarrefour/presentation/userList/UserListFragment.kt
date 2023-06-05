@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.desafiocarrefour.R
 import com.example.desafiocarrefour.databinding.FragmentFirstBinding
@@ -43,9 +44,9 @@ class UserListFragment : Fragment() {
         binding.userRecyclerView.adapter = adapter
         userListViewModel.usersLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
+            binding.textViewEmpty.isVisible =  it.isEmpty()
         }
     }
-
 
     private fun setupSearchBar(){
         binding.searchView.rootView.setOnClickListener {
@@ -57,8 +58,7 @@ class UserListFragment : Fragment() {
             binding.searchView.setQuery("", false)
             binding.userRecyclerView.adapter = adapter
         }
-
-        userListViewModel.usersLivedataLoading.observe(viewLifecycleOwner){
+        userListViewModel.usersLivedataLoading.observe(viewLifecycleOwner) {
             binding.pullToRefresh.isRefreshing = it
         }
 
@@ -78,6 +78,7 @@ class UserListFragment : Fragment() {
 
         userListViewModel.queryUsersLiveData.observe(viewLifecycleOwner){
             queryAdapter.submitList(it)
+            binding.textViewEmpty.isVisible =  it.isEmpty()
         }
     }
 }
