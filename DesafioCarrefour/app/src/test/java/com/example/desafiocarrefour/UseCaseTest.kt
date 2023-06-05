@@ -49,7 +49,7 @@ class UseCaseTest {
         runBlocking {
             mockWebServer = mockGithubService.successApi()
             val userList = userListUseCase.getUsersList(0)
-            assert(userList?.first()?.id == 1)
+            assert(userList.first().id == 1)
                 { "Was expecting User with id 1, but gor ${userList?.first()}"}
         }
     }

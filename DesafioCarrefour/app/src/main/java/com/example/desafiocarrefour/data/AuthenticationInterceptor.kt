@@ -15,6 +15,6 @@ class AuthenticationInterceptor : Interceptor {
 
     companion object{
         const val authorization_key = "Authorization"
-        const val auth_key = BuildConfig.API_KEY
+        const val auth_key = "Bearer " + BuildConfig.API_KEY
     }
 }
